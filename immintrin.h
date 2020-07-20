@@ -306,7 +306,7 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
 FORCE_INLINE __m512i _mm512_mask_shufflelo_epi16 (__m512i src,__mmask32 k,__m512i a,int imm8){
     __m512i dst;
     int16_t tmp_dst[32];
-    int i,j,k;
+    int i,j,j1,j2;
     tmp_dst[0] = vgetq_lane_s16(a.vect_s16[0],imm8&0x03);
     tmp_dst[1] = vgetq_lane_s16(a.vect_s16[0],(imm8>>2)&0x03);
     tmp_dst[2] = vgetq_lane_s16(a.vect_s16[0],(imm8>>4)&0x03);
@@ -345,12 +345,13 @@ FORCE_INLINE __m512i _mm512_mask_shufflelo_epi16 (__m512i src,__mmask32 k,__m512
 
     for(j=0;j<32;j++){
         i=j;
-        k=j/8;
+        j1=j/8;
+        j2=j%8;
         if((k>>j)&0x01){
-            dst.vect_s16[k] = vsetq_lane_s16(tmp_dst[i],dst.vect_s16[k],i);
+            dst.vect_s16[j1] = vsetq_lane_s16(tmp_dst[i],dst.vect_s16[j1],j2);
         }else{
 
-            dst.vect_s16[k] = vsetq_lane_s16(vgetq_lane_s16(src.vect_s16[3],j%8),dst.vect_s16[k],i);
+            dst.vect_s16[j1] = vsetq_lane_s16(vgetq_lane_s16(src.vect_s16[j1],j2),dst.vect_s16[j1],j2);
         }
     }
     return dst;
