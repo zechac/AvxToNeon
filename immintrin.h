@@ -319,35 +319,62 @@ FORCE_INLINE __m512i _mm512_mask_shufflelo_epi16 (__m512i src,__mmask32 k,__m512
     __m512i dst;
     int16_t tmp_dst[32];
     int i,j,j1,j2;
-    tmp_dst[0] = vgetq_lane_s16(a.vect_s16[0],imm8&0x03);
-    tmp_dst[1] = vgetq_lane_s16(a.vect_s16[0],(imm8>>2)&0x03);
-    tmp_dst[2] = vgetq_lane_s16(a.vect_s16[0],(imm8>>4)&0x03);
-    tmp_dst[3] = vgetq_lane_s16(a.vect_s16[0],(imm8>>6)&0x03);
-    for(j=4;j<8;j++){
-        tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],j);
+    for(j=0;j<4;j++){
+        switch((imm8>>(j*2))&0x03){
+            case 0:
+                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],0);
+                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],0);
+                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],0);
+                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],0);
+            break;
+            case 1:
+                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],1);
+                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],1);
+                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],1);
+                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],1);
+            break;
+            case 2:
+                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],2);
+                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],2);
+                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],2);
+                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],2);
+            break;
+            case 3:
+                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],3);
+                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],3);
+                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],3);
+                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],3);
+            break;
+        }
     }
-
-    tmp_dst[8] = vgetq_lane_s16(a.vect_s16[1],imm8&0x03);
-    tmp_dst[9] = vgetq_lane_s16(a.vect_s16[1],(imm8>>2)&0x03);
-    tmp_dst[10] = vgetq_lane_s16(a.vect_s16[1],(imm8>>4)&0x03);
-    tmp_dst[11] = vgetq_lane_s16(a.vect_s16[1],(imm8>>6)&0x03);
     for(j=4;j<8;j++){
-        tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],j);
-    }
-
-    tmp_dst[16] = vgetq_lane_s16(a.vect_s16[2],imm8&0x03);
-    tmp_dst[17] = vgetq_lane_s16(a.vect_s16[2],(imm8>>2)&0x03);
-    tmp_dst[18] = vgetq_lane_s16(a.vect_s16[2],(imm8>>4)&0x03);
-    tmp_dst[19] = vgetq_lane_s16(a.vect_s16[2],(imm8>>6)&0x03);
-    for(j=4;j<8;j++){
-        tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],j);
-    }
-    tmp_dst[24] = vgetq_lane_s16(a.vect_s16[3],imm8&0x03);
-    tmp_dst[25] = vgetq_lane_s16(a.vect_s16[3],(imm8>>2)&0x03);
-    tmp_dst[26] = vgetq_lane_s16(a.vect_s16[3],(imm8>>4)&0x03);
-    tmp_dst[27] = vgetq_lane_s16(a.vect_s16[3],(imm8>>6)&0x03);
-    for(j=4;j<8;j++){
-        tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],j);
+        switch(j){
+            case 4:
+                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],4);
+                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],4);
+                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],4);
+                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],4);
+            break;
+            case 5:
+                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],5);
+                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],5);
+                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],5);
+                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],5);
+            break;
+            case 6:
+                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],6);
+                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],6);
+                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],6);
+                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],6);
+            break;
+            case 7:
+                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],7);
+                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],7);
+                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],7);
+                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],7);
+            break;
+        }
+        
     }
 
     //dst.vect_s16[0]=vdupq_n_s16(0x00);
@@ -368,229 +395,3 @@ FORCE_INLINE __m512i _mm512_mask_shufflelo_epi16 (__m512i src,__mmask32 k,__m512
     }
     return dst;
 }
-
-/*
-
-FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512i v, _MM_SWIZZLE_ENUM s)
-{
-    __m512i res;
-    int i;
-    switch (s)
-    {
-    case _MM_SWIZ_REG_NONE:
-        res = v;
-        break;
-    case _MM_SWIZ_REG_DCBA:
-        res = v;
-        break;
-    case _MM_SWIZ_REG_CDAB:
-        for(int j=0;j<8;j++){
-            i=j*2;//i := j*64
-            if((k>>(j*2))&&0x0001){
-                res.vect_s32[i]=v.vect_s32[i+1];//v[i+63:i+32]
-            }else{
-                res.vect_s32[i]=v.vect_s32[i];
-            }
-            if((k>>(j*2+1))&&0x0001){
-                res.vect_s32[i+1]=v.vect_s32[i];
-            }else{
-                res.vect_s32[i+1]=v.vect_s32[i+1];
-            }
-        }
-        break;
-    case _MM_SWIZ_REG_BADC:
-        for(int j=0;j<4;j++){
-            i=j*4;//i :=j*128;
-            if((k>>(j*4))&&0x0001){
-                res.vect_s32[i]=v.vect_s32[i+2];
-            }else{
-                res.vect_s32[i]=src.vect_s32[i];
-            }
-            if((k>>(j*4+1))&&0x0001){
-                res.vect_s32[i+1] = v.vect_s32[i+1];
-            }else{
-                res.vect_s32[i+i] = src.vect_s32[i+1];
-            }
-            if((k>>(j*4+2))&&0x0001){
-                res.vect_s32[i+2] = v.vect_s32[i];
-            }else{
-                res.vect_s32[i+2] = src.vect_s32[i+2];
-            }
-            if((k>>(j*4+3))&&0x0001){
-                res.vect_s32[i+3] = v.vect_s32[i+1];
-            }else{
-                res.vect_s32[i+3] = src.vect_s32[i+3];
-            }
-        }
-        break;
-    case _MM_SWIZ_REG_AAAA:
-        for(int j=0;j<4;j++){
-            i=j*4;
-            if((k>>(j*4))&&0x0001){
-                res.vect_s32[i] = v.vect_s32[i];
-            }else{
-                res.vect_s32[i] = src.vect_s32[i];
-            }
-            if((k>>(j*4+1))&&0x0001){
-                res.vect_s32[i+1] = v.vect_s32[i];
-            }else{
-                res.vect_s32[i+1] = src.vect_s32[i+1];
-            }
-            if((k>>(j*4+2))&&0x0001){
-                res.vect_s32[i+2] = v.vect_s32[i];
-            }else{
-                res.vect_s32[i+2] = src.vect_s32[i+2];
-            }
-            if((k>>(j*4+3))&&0x0001){
-                res.vect_s32[i+3] = v.vect_s32[i];
-            }else{
-                res.vect_s32[i+3] = src.vect_s32[i+3];
-            }
-        }
-        break;
-    case _MM_SWIZ_REG_BBBB:
-        for(int j=0;j<4;j++){
-            i=j*4;
-            if((k>>(j*4))&&0x0001){
-                res.vect_s32[i] = v.vect_s32[i+1];
-            }else{
-                res.vect_s32[i] = src.vect_s32[i];
-            }
-            if((k>>(j*4+1))&&0x0001){
-                res.vect_s32[i+1+1] = v.vect_s32[i+1];
-            }else{
-                res.vect_s32[i+1] = src.vect_s32[i+1];
-            }
-            if((k>>(j*4+2))&&0x0001){
-                res.vect_s32[i+2] = v.vect_s32[i+1];
-            }else{
-                res.vect_s32[i+2] = src.vect_s32[i+2];
-            }
-            if((k>>(j*4+3))&&0x0001){
-                res.vect_s32[i+3] = v.vect_s32[i+1];
-            }else{
-                res.vect_s32[i+3] = src.vect_s32[i+3];
-            }
-        }
-        break;
-    case _MM_SWIZ_REG_CCCC:
-        for(int j=0;j<4;j++){
-            i=j*4;
-            if((k>>(j*4))&&0x0001){
-                res.vect_s32[i] = v.vect_s32[i+2];
-            }else{
-                res.vect_s32[i] = src.vect_s32[i];
-            }
-            if((k>>(j*4+1))&&0x0001){
-                res.vect_s32[i+1] = v.vect_s32[i+2];
-            }else{
-                res.vect_s32[i+1] = src.vect_s32[i+1];
-            }
-            if((k>>(j*4+2))&&0x0001){
-                res.vect_s32[i+2] = v.vect_s32[i]+2;
-            }else{
-                res.vect_s32[i+2] = src.vect_s32[i+2];
-            }
-            if((k>>(j*4+3))&&0x0001){
-                res.vect_s32[i+3] = v.vect_s32[i+2];
-            }else{
-                res.vect_s32[i+3] = src.vect_s32[i+3];
-            }
-        }
-        break;
-    case _MM_SWIZ_REG_DDDD:
-        for(int j=0;j<4;j++){
-            i=j*4;
-            if((k>>(j*4))&&0x0001){
-                res.vect_s32[i] = v.vect_s32[i+3];
-            }else{
-                res.vect_s32[i] = src.vect_s32[i];
-            }
-            if((k>>(j*4+1))&&0x0001){
-                res.vect_s32[i+1] = v.vect_s32[i+3];
-            }else{
-                res.vect_s32[i+1] = src.vect_s32[i+1];
-            }
-            if((k>>(j*4+2))&&0x0001){
-                res.vect_s32[i+2] = v.vect_s32[i+3];
-            }else{
-                res.vect_s32[i+2] = src.vect_s32[i+2];
-            }
-            if((k>>(j*4+3))&&0x0001){
-                res.vect_s32[i+3] = v.vect_s32[i+3];
-            }else{
-                res.vect_s32[i+3] = src.vect_s32[i+3];
-            }
-        }
-        break;
-    case _MM_SWIZ_REG_DACB:
-        for(int j=0;j<4;j++){
-            i=j*4;
-            if((k>>(j*4))&&0x0001){
-                res.vect_s32[i] = v.vect_s32[i+1];
-            }else{
-                res.vect_s32[i] = src.vect_s32[i];
-            }
-            if((k>>(j*4+1))&&0x0001){
-                res.vect_s32[i+1] = v.vect_s32[i+2];
-            }else{
-                res.vect_s32[i+1] = src.vect_s32[i+1];
-            }
-            if((k>>(j*4+2))&&0x0001){
-                res.vect_s32[i+2] = v.vect_s32[i];
-            }else{
-                res.vect_s32[i+2] = src.vect_s32[i+2];
-            }
-            if((k>>(j*4+3))&&0x0001){
-                res.vect_s32[i+3] = v.vect_s32[i+3];
-            }else{
-                res.vect_s32[i+3] = src.vect_s32[i+3];
-            }
-        }
-        break;
-    default:
-        break;
-    }
-    return res;
-}
-
-FORCE_INLINE __m512i _mm512_mask_shufflelo_epi16 (__m512i src,__mmask32 k,__m512i a,int imm8){
-    __m512i tmp_dst,dst;
-    int i;
-    tmp_dst.vect_s16[0] = a.vect_s16[0];
-    tmp_dst.vect_s16[1] = a.vect_s16[1];
-    tmp_dst.vect_s16[2] = a.vect_s16[2];
-    tmp_dst.vect_s16[3] = a.vect_s16[3];
-
-    tmp_dst.vect_s16[0] = a.vect_s16[imm8&0x00000003];
-    tmp_dst.vect_s16[1] = a.vect_s16[(imm8>>2)&0x00000003];
-    tmp_dst.vect_s16[2] = a.vect_s16[(imm8>>4)&0x00000003];
-    tmp_dst.vect_s16[3] = a.vect_s16[(imm8>>6)&0x00000003];
-
-    tmp_dst.vect_s16[8] = a.vect_s16[imm8&0x00000003+8];
-    tmp_dst.vect_s16[9] = a.vect_s16[(imm8>>2)&0x00000003+8];
-    tmp_dst.vect_s16[10] = a.vect_s16[(imm8>>4)&0x00000003+8];
-    tmp_dst.vect_s16[11] = a.vect_s16[(imm8>>6)&0x00000003+8];
-
-    tmp_dst.vect_s16[16] = a.vect_s16[imm8&0x00000003+16];
-    tmp_dst.vect_s16[17] = a.vect_s16[(imm8>>2)&0x00000003+16];
-    tmp_dst.vect_s16[18] = a.vect_s16[(imm8>>4)&0x00000003+16];
-    tmp_dst.vect_s16[19] = a.vect_s16[(imm8>>6)&0x00000003+16];
-
-    tmp_dst.vect_s16[24] = a.vect_s16[imm8&0x00000003+24];
-    tmp_dst.vect_s16[25] = a.vect_s16[(imm8>>2)&0x00000003+24];
-    tmp_dst.vect_s16[26] = a.vect_s16[(imm8>>4)&0x00000003+24];
-    tmp_dst.vect_s16[27] = a.vect_s16[(imm8>>6)&0x00000003+24];
-
-    for(int j=0;j<32;j++){
-        i=j;
-        if((k>>j)&0x00000001){
-            dst.vect_s16[i] = tmp_dst.vect_s16[i];
-        }else{
-            dst.vect_s16[i] = src.vect_s16[i];
-        }
-    }
-    return dst;
-}
-
-*/
