@@ -1409,6 +1409,46 @@ const char *RunTest(InstructionTest test, int *flag)
             ret = "MM_MALLOC";
             *flag = test_mm_malloc();
             break;
+        case UT_MM512_MASK_SWIZZLE_EPI32_NONE:
+            ret = "MM512_MASK_SWIZZLE_EPI32_NONE";
+            *flag = test_mm_malloc();
+            break;
+        case UT_MM512_MASK_SWIZZLE_EPI32_DCBA:
+            ret = "MM512_MASK_SWIZZLE_EPI32_DCBA";
+            *flag = test_mm_malloc();
+            break;
+        case UT_MM512_MASK_SWIZZLE_EPI32_CDAB:
+            ret = "MM512_MASK_SWIZZLE_EPI32_CDAB";
+            *flag = test_mm_malloc();
+            break;
+        case UT_MM512_MASK_SWIZZLE_EPI32_BADC:
+            ret = "MM512_MASK_SWIZZLE_EPI32_BADC";
+            *flag = test_mm_malloc();
+            break;
+        case UT_MM512_MASK_SWIZZLE_EPI32_AAAA:
+            ret = "MM512_MASK_SWIZZLE_EPI32_AAAA";
+            *flag = test_mm_malloc();
+            break;
+        case UT_MM512_MASK_SWIZZLE_EPI32_BBBB:
+            ret = "MM512_MASK_SWIZZLE_EPI32_BBBB";
+            *flag = test_mm_malloc();
+            break;
+        case UT_MM512_MASK_SWIZZLE_EPI32_CCCC:
+            ret = "MM512_MASK_SWIZZLE_EPI32_CCCC";
+            *flag = test_mm_malloc();
+            break;
+        case UT_MM512_MASK_SWIZZLE_EPI32_DDDD:
+            ret = "MM512_MASK_SWIZZLE_EPI32_DDDD";
+            *flag = test_mm_malloc();
+            break;
+        case UT_MM512_MASK_SWIZZLE_EPI32_DACB:
+            ret = "MM512_MASK_SWIZZLE_EPI32_DACB";
+            *flag = test_mm_malloc();
+            break;
+        case UT_MM512_MASK_SHUFFLELO_EPI16:
+            ret = "MM512_MASK_SHUFFLELO_EPI16";
+            *flag = test_mm_malloc();
+            break;
         default:
             break;
     }
@@ -5903,4 +5943,164 @@ int test_mm_malloc()
     int res = (uintptr_t)p % align == 0 ? TRUE : FALSE;
     _mm_free(p);
     return res;
+}
+
+int test_mm512_mask_swizzle_epi32_NONE(){
+    int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
+    int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int iCount;
+    __m512i src, v;
+    __mmask16 mask = 0xAA;
+    _MM_SWIZZLE_ENUM sw = _MM_SWIZ_REG_NONE;
+    for (iCount = 0; iCount < g_512bit_divto_128bit; iCount++) {
+        src.vect_s32[iCount] = vld1q_s32(a + iCount * 4);
+        v.vect_s32[iCount] = vld1q_s32(b + iCount * 4);
+    }
+    __m512i res = _mm512_mask_swizzle_epi32(src,mask, v,sw);
+    return comp_return(expect, &res, sizeof(__m512i));
+}
+
+int test_mm512_mask_swizzle_epi32_DCBA(){
+    int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
+    int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int iCount;
+    __m512i src, v;
+    __mmask16 mask = 0xAA;
+    _MM_SWIZZLE_ENUM sw = _MM_SWIZ_REG_DCBA;
+    for (iCount = 0; iCount < g_512bit_divto_128bit; iCount++) {
+        src.vect_s32[iCount] = vld1q_s32(a + iCount * 4);
+        v.vect_s32[iCount] = vld1q_s32(b + iCount * 4);
+    }
+    __m512i res = _mm512_mask_swizzle_epi32(src,mask, v,sw);
+    return comp_return(expect, &res, sizeof(__m512i));
+}
+
+int test_mm512_mask_swizzle_epi32_CDAB(){
+    int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
+    int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int iCount;
+    __m512i src, v;
+    __mmask16 mask = 0xAA;
+    _MM_SWIZZLE_ENUM sw = _MM_SWIZ_REG_CDAB;
+    for (iCount = 0; iCount < g_512bit_divto_128bit; iCount++) {
+        src.vect_s32[iCount] = vld1q_s32(a + iCount * 4);
+        v.vect_s32[iCount] = vld1q_s32(b + iCount * 4);
+    }
+    __m512i res = _mm512_mask_swizzle_epi32(src,mask, v,sw);
+    return comp_return(expect, &res, sizeof(__m512i));
+}
+
+int test_mm512_mask_swizzle_epi32_BADC(){
+    int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
+    int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int iCount;
+    __m512i src, v;
+    __mmask16 mask = 0xAA;
+    _MM_SWIZZLE_ENUM sw = _MM_SWIZ_REG_BADC;
+    for (iCount = 0; iCount < g_512bit_divto_128bit; iCount++) {
+        src.vect_s32[iCount] = vld1q_s32(a + iCount * 4);
+        v.vect_s32[iCount] = vld1q_s32(b + iCount * 4);
+    }
+    __m512i res = _mm512_mask_swizzle_epi32(src,mask, v,sw);
+    return comp_return(expect, &res, sizeof(__m512i));
+}
+
+int test_mm512_mask_swizzle_epi32_AAAA(){
+    int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
+    int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int iCount;
+    __m512i src, v;
+    __mmask16 mask = 0xAA;
+    _MM_SWIZZLE_ENUM sw = _MM_SWIZ_REG_AAAA;
+    for (iCount = 0; iCount < g_512bit_divto_128bit; iCount++) {
+        src.vect_s32[iCount] = vld1q_s32(a + iCount * 4);
+        v.vect_s32[iCount] = vld1q_s32(b + iCount * 4);
+    }
+    __m512i res = _mm512_mask_swizzle_epi32(src,mask, v,sw);
+    return comp_return(expect, &res, sizeof(__m512i));
+}
+
+int test_mm512_mask_swizzle_epi32_BBBB(){
+    int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
+    int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int iCount;
+    __m512i src, v;
+    __mmask16 mask = 0xAA;
+    _MM_SWIZZLE_ENUM sw = _MM_SWIZ_REG_BBBB;
+    for (iCount = 0; iCount < g_512bit_divto_128bit; iCount++) {
+        src.vect_s32[iCount] = vld1q_s32(a + iCount * 4);
+        v.vect_s32[iCount] = vld1q_s32(b + iCount * 4);
+    }
+    __m512i res = _mm512_mask_swizzle_epi32(src,mask, v,sw);
+    return comp_return(expect, &res, sizeof(__m512i));
+}
+
+int test_mm512_mask_swizzle_epi32_CCCC(){
+    int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
+    int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int iCount;
+    __m512i src, v;
+    __mmask16 mask = 0xAA;
+    _MM_SWIZZLE_ENUM sw = _MM_SWIZ_REG_CCCC;
+    for (iCount = 0; iCount < g_512bit_divto_128bit; iCount++) {
+        src.vect_s32[iCount] = vld1q_s32(a + iCount * 4);
+        v.vect_s32[iCount] = vld1q_s32(b + iCount * 4);
+    }
+    __m512i res = _mm512_mask_swizzle_epi32(src,mask, v,sw);
+    return comp_return(expect, &res, sizeof(__m512i));
+}
+
+int test_mm512_mask_swizzle_epi32_DDDD(){
+    int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
+    int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int iCount;
+    __m512i src, v;
+    __mmask16 mask = 0xAA;
+    _MM_SWIZZLE_ENUM sw = _MM_SWIZ_REG_DDDD;
+    for (iCount = 0; iCount < g_512bit_divto_128bit; iCount++) {
+        src.vect_s32[iCount] = vld1q_s32(a + iCount * 4);
+        v.vect_s32[iCount] = vld1q_s32(b + iCount * 4);
+    }
+    __m512i res = _mm512_mask_swizzle_epi32(src,mask, v,sw);
+    return comp_return(expect, &res, sizeof(__m512i));
+}
+
+int test_mm512_mask_swizzle_epi32_DACB(){
+    int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
+    int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int iCount;
+    __m512i src, v;
+    __mmask16 mask = 0xAA;
+    _MM_SWIZZLE_ENUM sw = _MM_SWIZ_REG_DACB;
+    for (iCount = 0; iCount < g_512bit_divto_128bit; iCount++) {
+        src.vect_s32[iCount] = vld1q_s32(a + iCount * 4);
+        v.vect_s32[iCount] = vld1q_s32(b + iCount * 4);
+    }
+    __m512i res = _mm512_mask_swizzle_epi32(src,mask, v,sw);
+    return comp_return(expect, &res, sizeof(__m512i));
+}
+
+int test_mm512_mask_shufflelo_epi16(){
+    int32_t *a = g_test_mm512_mask_shufflelo_epi16_data_model.a;
+    int32_t *b = g_test_mm512_mask_shufflelo_epi16_data_model.b;
+    int32_t *expect = g_test_mm512_mask_shufflelo_epi16_data_model.expect;
+    int iCount;
+    __m512i src, v;
+    __mmask32 mask = 0xAABBCCDD;
+    int imm8= 0xDDCCBBAA;
+    for (iCount = 0; iCount < g_512bit_divto_128bit; iCount++) {
+        src.vect_s32[iCount] = vld1q_s32(a + iCount * 4);
+        v.vect_s32[iCount] = vld1q_s32(b + iCount * 4);
+    }
+    __m512i res = _mm512_mask_shufflelo_epi16(src,mask, v,imm8);
+    return comp_return(expect, &res, sizeof(__m512i));
 }

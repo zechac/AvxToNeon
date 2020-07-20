@@ -58,6 +58,10 @@
 #define __mmask64 unsigned long long
 #endif
 
+#ifndef __mmask32
+#define __mmask32 unsigned int
+#endif
+
 #ifndef __mmask16
 #define __mmask16 unsigned short
 #endif

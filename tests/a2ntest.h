@@ -350,7 +350,17 @@ typedef enum {
     UT_MM_PACKS_EPI32,
     UT_MM256_PACKS_EPI32,
     UT_MM512_PACKS_EPI32,
-    UT_MM_MALLOC
+    UT_MM_MALLOC,
+    UT_MM512_MASK_SWIZZLE_EPI32_NONE,
+    UT_MM512_MASK_SWIZZLE_EPI32_DCBA,
+    UT_MM512_MASK_SWIZZLE_EPI32_CDAB,
+    UT_MM512_MASK_SWIZZLE_EPI32_BADC,
+    UT_MM512_MASK_SWIZZLE_EPI32_AAAA,
+    UT_MM512_MASK_SWIZZLE_EPI32_BBBB,
+    UT_MM512_MASK_SWIZZLE_EPI32_CCCC,
+    UT_MM512_MASK_SWIZZLE_EPI32_DDDD,
+    UT_MM512_MASK_SWIZZLE_EPI32_DACB,
+    UT_MM512_MASK_SHUFFLELO_EPI16
 } InstructionTest;
 
 const char *RunTest(InstructionTest test, int *flag);
@@ -694,5 +704,15 @@ int test_mm_packs_epi32();
 int test_mm256_packs_epi32();
 int test_mm512_packs_epi32();
 int test_mm_malloc();
+int test_mm512_mask_swizzle_epi32_NONE();
+int test_mm512_mask_swizzle_epi32_DCBA();
+int test_mm512_mask_swizzle_epi32_CDAB();
+int test_mm512_mask_swizzle_epi32_BADC();
+int test_mm512_mask_swizzle_epi32_AAAA();
+int test_mm512_mask_swizzle_epi32_BBBB();
+int test_mm512_mask_swizzle_epi32_CCCC();
+int test_mm512_mask_swizzle_epi32_DDDD();
+int test_mm512_mask_swizzle_epi32_DACB();
+int test_mm512_mask_shufflelo_epi16();
 
 #endif

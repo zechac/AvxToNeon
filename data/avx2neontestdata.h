@@ -3559,4 +3559,24 @@ typedef struct {
 } test_mm_malloc_data_model;
 static test_mm_malloc_data_model g_test_mm_malloc_data = {128, 128};
 
+typedef struct {
+    int32_t a[16];
+    int32_t b[16];
+    int32_t expect[16];
+} test_mm512_mask_swizzle_epi32_data_model;
+static test_mm512_mask_swizzle_epi32_data_model g_test_mm512_mask_swizzle_epi32_data_model = {
+    {246, 10,  160, 160, 47,  243, 45,  128, 76,  158, 44, 44, 26, 145, 210, 76},
+    {203, 225, 28, 239, 30, 109, 154, 172, 13,  57,  63,  61, 195, 246, 0, 201},
+    {203, 10, 28, 160, 30, 109, 45, 128, 13, 57, 44, 44, 26, 145, 0, 76}};
+
+typedef struct {
+    int32_t a[16];
+    int32_t b[16];
+    int32_t expect[16];
+} test_mm512_mask_shufflelo_epi16_data_model;
+static test_mm512_mask_shufflelo_epi16_data_model g_test_mm512_mask_shufflelo_epi16_data_model = {
+    {246, 10,  160, 160, 47,  243, 45,  128, 76,  158, 44, 44, 26, 145, 210, 76},
+    {203, 225, 28, 239, 30, 109, 154, 172, 13,  57,  63,  61, 195, 246, 0, 201},
+    {203, 10, 28, 160, 30, 109, 45, 128, 13, 57, 44, 44, 26, 145, 0, 76}}
+
 #endif
