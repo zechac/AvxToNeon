@@ -123,27 +123,35 @@ typedef enum {
 FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512i v, _MM_SWIZZLE_ENUM s)
 {
     __m512i res;
+    int32_t tmp_src[16],tmp_v[16],tmp_dst[16];
     int i;
+    if(s==_MM_SWIZ_REG_NONE||s==_MM_SWIZ_REG_DCBA){
+        return v;
+    }
+
+    vst1q_s32(tmp_src,src.vect_s32[0]);
+    vst1q_s32(tmp_src+4,src.vect_s32[1]);
+    vst1q_s32(tmp_src+8,src.vect_s32[2]);
+    vst1q_s32(tmp_src+12,src.vect_s32[3]);
+    vst1q_s32(tmp_v,v.vect_s32[0]);
+    vst1q_s32(tmp_v+4,v.vect_s32[1]);
+    vst1q_s32(tmp_v+8,v.vect_s32[2]);
+    vst1q_s32(tmp_v+12,v.vect_s32[3]);
+
     switch (s)
     {
-    case _MM_SWIZ_REG_NONE:
-        res = v;
-        break;
-    case _MM_SWIZ_REG_DCBA:
-        res = v;
-        break;
     case _MM_SWIZ_REG_CDAB:
         for(int j=0;j<8;j++){
             i=j*2;//i := j*64
             if((k>>(j*2))&&0x0001){
-                res.vect_s32[i]=v.vect_s32[i+1];//v[i+63:i+32]
+                tmp_dst[i] = tmp_v[i+1];//v[i+63:i+32]
             }else{
-                res.vect_s32[i]=v.vect_s32[i];
+                tmp_dst[i] = tmp_src[i];
             }
             if((k>>(j*2+1))&&0x0001){
-                res.vect_s32[i+1]=v.vect_s32[i];
+                tmp_dst[i+1] = tmp_v[i];
             }else{
-                res.vect_s32[i+1]=v.vect_s32[i+1];
+                tmp_dst[i+1] = tmp_v[i+1];
             }
         }
         break;
@@ -151,24 +159,24 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
         for(int j=0;j<4;j++){
             i=j*4;//i :=j*128;
             if((k>>(j*4))&&0x0001){
-                res.vect_s32[i]=v.vect_s32[i+2];
+                tmp_dst[i]=tmp_v[i+2];
             }else{
-                res.vect_s32[i]=src.vect_s32[i];
+                tmp_dst[i]=tmp_src[i];
             }
             if((k>>(j*4+1))&&0x0001){
-                res.vect_s32[i+1] = v.vect_s32[i+1];
+                tmp_dst[i+1] = tmp_v[i+1];
             }else{
-                res.vect_s32[i+i] = src.vect_s32[i+1];
+                tmp_dst[i+i] = tmp_src[i+1];
             }
             if((k>>(j*4+2))&&0x0001){
-                res.vect_s32[i+2] = v.vect_s32[i];
+                tmp_dst[i+2] = tmp_v[i];
             }else{
-                res.vect_s32[i+2] = src.vect_s32[i+2];
+                tmp_dst[i+2] = tmp_src[i+2];
             }
             if((k>>(j*4+3))&&0x0001){
-                res.vect_s32[i+3] = v.vect_s32[i+1];
+                tmp_dst[i+3] = tmp_v[i+1];
             }else{
-                res.vect_s32[i+3] = src.vect_s32[i+3];
+                tmp_dst[i+3] = tmp_src[i+3];
             }
         }
         break;
@@ -176,24 +184,24 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
         for(int j=0;j<4;j++){
             i=j*4;
             if((k>>(j*4))&&0x0001){
-                res.vect_s32[i] = v.vect_s32[i];
+                tmp_dst[i] = tmp_v[i];
             }else{
-                res.vect_s32[i] = src.vect_s32[i];
+                tmp_dst[i] = tmp_src[i];
             }
             if((k>>(j*4+1))&&0x0001){
-                res.vect_s32[i+1] = v.vect_s32[i];
+                tmp_dst[i+1] = tmp_v[i];
             }else{
-                res.vect_s32[i+1] = src.vect_s32[i+1];
+                tmp_dst[i+1] = tmp_src[i+1];
             }
             if((k>>(j*4+2))&&0x0001){
-                res.vect_s32[i+2] = v.vect_s32[i];
+                tmp_dst[i+2] = tmp_v[i];
             }else{
-                res.vect_s32[i+2] = src.vect_s32[i+2];
+                tmp_dst[i+2] = tmp_src[i+2];
             }
             if((k>>(j*4+3))&&0x0001){
-                res.vect_s32[i+3] = v.vect_s32[i];
+                tmp_dst[i+3] = tmp_v[i];
             }else{
-                res.vect_s32[i+3] = src.vect_s32[i+3];
+                tmp_dst[i+3] = tmp_src[i+3];
             }
         }
         break;
@@ -201,24 +209,24 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
         for(int j=0;j<4;j++){
             i=j*4;
             if((k>>(j*4))&&0x0001){
-                res.vect_s32[i] = v.vect_s32[i+1];
+                tmp_dst[i] = tmp_v[i+1];
             }else{
-                res.vect_s32[i] = src.vect_s32[i];
+                tmp_dst[i] = tmp_src[i];
             }
             if((k>>(j*4+1))&&0x0001){
-                res.vect_s32[i+1+1] = v.vect_s32[i+1];
+                tmp_dst[i+1+1] = tmp_v[i+1];
             }else{
-                res.vect_s32[i+1] = src.vect_s32[i+1];
+                tmp_dst[i+1] = tmp_src[i+1];
             }
             if((k>>(j*4+2))&&0x0001){
-                res.vect_s32[i+2] = v.vect_s32[i+1];
+                tmp_dst[i+2] = tmp_v[i+1];
             }else{
-                res.vect_s32[i+2] = src.vect_s32[i+2];
+                tmp_dst[i+2] = tmp_src[i+2];
             }
             if((k>>(j*4+3))&&0x0001){
-                res.vect_s32[i+3] = v.vect_s32[i+1];
+                tmp_dst[i+3] = tmp_v[i+1];
             }else{
-                res.vect_s32[i+3] = src.vect_s32[i+3];
+                tmp_dst[i+3] = tmp_src[i+3];
             }
         }
         break;
@@ -226,24 +234,24 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
         for(int j=0;j<4;j++){
             i=j*4;
             if((k>>(j*4))&&0x0001){
-                res.vect_s32[i] = v.vect_s32[i+2];
+                tmp_dst[i] = tmp_v[i+2];
             }else{
-                res.vect_s32[i] = src.vect_s32[i];
+                tmp_dst[i] = tmp_src[i];
             }
             if((k>>(j*4+1))&&0x0001){
-                res.vect_s32[i+1] = v.vect_s32[i+2];
+                tmp_dst[i+1] = tmp_v[i+2];
             }else{
-                res.vect_s32[i+1] = src.vect_s32[i+1];
+                tmp_dst[i+1] = tmp_src[i+1];
             }
             if((k>>(j*4+2))&&0x0001){
-                res.vect_s32[i+2] = v.vect_s32[i]+2;
+                tmp_dst[i+2] = tmp_v[i]+2;
             }else{
-                res.vect_s32[i+2] = src.vect_s32[i+2];
+                tmp_dst[i+2] = tmp_src[i+2];
             }
             if((k>>(j*4+3))&&0x0001){
-                res.vect_s32[i+3] = v.vect_s32[i+2];
+                tmp_dst[i+3] = tmp_v[i+2];
             }else{
-                res.vect_s32[i+3] = src.vect_s32[i+3];
+                tmp_dst[i+3] = tmp_src[i+3];
             }
         }
         break;
@@ -251,24 +259,24 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
         for(int j=0;j<4;j++){
             i=j*4;
             if((k>>(j*4))&&0x0001){
-                res.vect_s32[i] = v.vect_s32[i+3];
+                tmp_dst[i] = tmp_v[i+3];
             }else{
-                res.vect_s32[i] = src.vect_s32[i];
+                tmp_dst[i] = tmp_src[i];
             }
             if((k>>(j*4+1))&&0x0001){
-                res.vect_s32[i+1] = v.vect_s32[i+3];
+                tmp_dst[i+1] = tmp_v[i+3];
             }else{
-                res.vect_s32[i+1] = src.vect_s32[i+1];
+                tmp_dst[i+1] = tmp_src[i+1];
             }
             if((k>>(j*4+2))&&0x0001){
-                res.vect_s32[i+2] = v.vect_s32[i+3];
+                tmp_dst[i+2] = tmp_v[i+3];
             }else{
-                res.vect_s32[i+2] = src.vect_s32[i+2];
+                tmp_dst[i+2] = tmp_src[i+2];
             }
             if((k>>(j*4+3))&&0x0001){
-                res.vect_s32[i+3] = v.vect_s32[i+3];
+                tmp_dst[i+3] = tmp_v[i+3];
             }else{
-                res.vect_s32[i+3] = src.vect_s32[i+3];
+                tmp_dst[i+3] = tmp_src[i+3];
             }
         }
         break;
@@ -276,30 +284,34 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
         for(int j=0;j<4;j++){
             i=j*4;
             if((k>>(j*4))&&0x0001){
-                res.vect_s32[i] = v.vect_s32[i+1];
+                tmp_dst[i] = tmp_v[i+1];
             }else{
-                res.vect_s32[i] = src.vect_s32[i];
+                tmp_dst[i] = tmp_src[i];
             }
             if((k>>(j*4+1))&&0x0001){
-                res.vect_s32[i+1] = v.vect_s32[i+2];
+                tmp_dst[i+1] = tmp_v[i+2];
             }else{
-                res.vect_s32[i+1] = src.vect_s32[i+1];
+                tmp_dst[i+1] = tmp_src[i+1];
             }
             if((k>>(j*4+2))&&0x0001){
-                res.vect_s32[i+2] = v.vect_s32[i];
+                tmp_dst[i+2] = tmp_v[i];
             }else{
-                res.vect_s32[i+2] = src.vect_s32[i+2];
+                tmp_dst[i+2] = tmp_src[i+2];
             }
             if((k>>(j*4+3))&&0x0001){
-                res.vect_s32[i+3] = v.vect_s32[i+3];
+                tmp_dst[i+3] = tmp_v[i+3];
             }else{
-                res.vect_s32[i+3] = src.vect_s32[i+3];
+                tmp_dst[i+3] = tmp_src[i+3];
             }
         }
         break;
     default:
         break;
     }
+    res.vect_s32[0] = vld1q_s32(tmp_dst);
+    res.vect_s32[1] = vld1q_s32(tmp_dst+4);
+    res.vect_s32[2] = vld1q_s32(tmp_dst+8);
+    res.vect_s32[3] = vld1q_s32(tmp_dst+12);
     return res;
 }
 
