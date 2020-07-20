@@ -5948,7 +5948,7 @@ int test_mm_malloc()
 int test_mm512_mask_swizzle_epi32_NONE(){
     int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
     int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
-    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect_none;
     int iCount;
     __m512i src, v;
     __mmask16 mask = 0xAA;
@@ -5964,7 +5964,7 @@ int test_mm512_mask_swizzle_epi32_NONE(){
 int test_mm512_mask_swizzle_epi32_DCBA(){
     int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
     int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
-    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect_dcba;
     int iCount;
     __m512i src, v;
     __mmask16 mask = 0xAA;
@@ -5980,7 +5980,7 @@ int test_mm512_mask_swizzle_epi32_DCBA(){
 int test_mm512_mask_swizzle_epi32_CDAB(){
     int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
     int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
-    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect_cdab;
     int iCount;
     __m512i src, v;
     __mmask16 mask = 0xAA;
@@ -5996,7 +5996,7 @@ int test_mm512_mask_swizzle_epi32_CDAB(){
 int test_mm512_mask_swizzle_epi32_BADC(){
     int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
     int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
-    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect_badc;
     int iCount;
     __m512i src, v;
     __mmask16 mask = 0xAA;
@@ -6012,7 +6012,7 @@ int test_mm512_mask_swizzle_epi32_BADC(){
 int test_mm512_mask_swizzle_epi32_AAAA(){
     int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
     int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
-    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect_aaaa;
     int iCount;
     __m512i src, v;
     __mmask16 mask = 0xAA;
@@ -6028,7 +6028,7 @@ int test_mm512_mask_swizzle_epi32_AAAA(){
 int test_mm512_mask_swizzle_epi32_BBBB(){
     int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
     int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
-    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect_bbbb;
     int iCount;
     __m512i src, v;
     __mmask16 mask = 0xAA;
@@ -6044,7 +6044,7 @@ int test_mm512_mask_swizzle_epi32_BBBB(){
 int test_mm512_mask_swizzle_epi32_CCCC(){
     int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
     int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
-    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect_cccc;
     int iCount;
     __m512i src, v;
     __mmask16 mask = 0xAA;
@@ -6060,7 +6060,7 @@ int test_mm512_mask_swizzle_epi32_CCCC(){
 int test_mm512_mask_swizzle_epi32_DDDD(){
     int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
     int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
-    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect_dddd;
     int iCount;
     __m512i src, v;
     __mmask16 mask = 0xAA;
@@ -6076,7 +6076,7 @@ int test_mm512_mask_swizzle_epi32_DDDD(){
 int test_mm512_mask_swizzle_epi32_DACB(){
     int32_t *a = g_test_mm512_mask_swizzle_epi32_data_model.a;
     int32_t *b = g_test_mm512_mask_swizzle_epi32_data_model.b;
-    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect;
+    int32_t *expect = g_test_mm512_mask_swizzle_epi32_data_model.expect_dacb;
     int iCount;
     __m512i src, v;
     __mmask16 mask = 0xAA;
