@@ -317,81 +317,54 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
 
 FORCE_INLINE __m512i _mm512_mask_shufflelo_epi16 (__m512i src,__mmask32 k,__m512i a,int imm8){
     __m512i dst;
-    int16_t tmp_dst[32];
-    int i,j,j1,j2;
-    for(j=0;j<4;j++){
-        switch((imm8>>(j*2))&0x03){
-            case 0:
-                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],0);
-                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],0);
-                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],0);
-                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],0);
-            break;
-            case 1:
-                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],1);
-                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],1);
-                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],1);
-                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],1);
-            break;
-            case 2:
-                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],2);
-                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],2);
-                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],2);
-                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],2);
-            break;
-            case 3:
-                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],3);
-                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],3);
-                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],3);
-                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],3);
-            break;
-        }
-    }
-    for(j=4;j<8;j++){
-        switch(j){
-            case 4:
-                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],4);
-                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],4);
-                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],4);
-                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],4);
-            break;
-            case 5:
-                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],5);
-                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],5);
-                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],5);
-                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],5);
-            break;
-            case 6:
-                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],6);
-                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],6);
-                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],6);
-                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],6);
-            break;
-            case 7:
-                tmp_dst[j] = vgetq_lane_s16(a.vect_s16[0],7);
-                tmp_dst[j+8] = vgetq_lane_s16(a.vect_s16[1],7);
-                tmp_dst[j+16] = vgetq_lane_s16(a.vect_s16[2],7);
-                tmp_dst[j+24] = vgetq_lane_s16(a.vect_s16[3],7);
-            break;
-        }
-        
+    int16_t tmp_dst[32],tmp_src[32],tmp_a[32];
+    int i,j;
+
+    vst1q_s16(tmp_a,a.vect_s16[0]);
+    vst1q_s16(tmp_a+8,a.vect_s16[1]);
+    vst1q_s16(tmp_a+16,a.vect_s16[2]);
+    vst1q_s16(tmp_a+24,a.vect_s16[3]);
+
+    vst1q_s16(tmp_src,src.vect_s16[0]);
+    vst1q_s16(tmp_src+8,src.vect_s16[1]);
+    vst1q_s16(tmp_src+16,src.vect_s16[2]);
+    vst1q_s16(tmp_src+24,src.vect_s16[3]);
+
+    for(i=0;i<32;i++){
+        tmp_dst[i] = tmp_a[i];
     }
 
-    //dst.vect_s16[0]=vdupq_n_s16(0x00);
-    //dst.vect_s16[1]=vdupq_n_s16(0x00);
-    //dst.vect_s16[2]=vdupq_n_s16(0x00);
-    //dst.vect_s16[3]=vdupq_n_s16(0x00);
+    tmp_dst[0] = tmp_a[imm8&0x00000003];
+    tmp_dst[1] = tmp_a[(imm8>>2)&0x00000003];
+    tmp_dst[2] = tmp_a[(imm8>>4)&0x00000003];
+    tmp_dst[3] = tmp_a[(imm8>>6)&0x00000003];
 
-    for(j=0;j<32;j++){
+    tmp_dst[8] = tmp_a[imm8&0x00000003+8];
+    tmp_dst[9] = tmp_a[(imm8>>2)&0x00000003+8];
+    tmp_dst[10] = tmp_a[(imm8>>4)&0x00000003+8];
+    tmp_dst[11] = tmp_a[(imm8>>6)&0x00000003+8];
+
+    tmp_dst[16] = tmp_a[imm8&0x00000003+16];
+    tmp_dst[17] = tmp_a[(imm8>>2)&0x00000003+16];
+    tmp_dst[18] = tmp_a[(imm8>>4)&0x00000003+16];
+    tmp_dst[19] = tmp_a[(imm8>>6)&0x00000003+16];
+
+    tmp_dst[24] = tmp_a[imm8&0x00000003+24];
+    tmp_dst[25] = tmp_a[(imm8>>2)&0x00000003+24];
+    tmp_dst[26] = tmp_a[(imm8>>4)&0x00000003+24];
+    tmp_dst[27] = tmp_a[(imm8>>6)&0x00000003+24];
+
+    for(int j=0;j<32;j++){
         i=j;
-        j1=j/8;
-        j2=j%8;
-        if((k>>j)&0x01){
-            dst.vect_s16[j1] = vsetq_lane_s16(tmp_dst[i],dst.vect_s16[j1],j2);
+        if((k>>j)&0x00000001){
+            //dst[i] = tmp_dst[i];
         }else{
-
-            dst.vect_s16[j1] = vsetq_lane_s16(vgetq_lane_s16(src.vect_s16[j1],j2),dst.vect_s16[j1],j2);
+            tmp_dst[i] = tmp_src[i];
         }
     }
+    dst.vect_s16[0] = vld1q_s16(tmp_dst);
+    dst.vect_s16[1] = vld1q_s16(tmp_dst+8);
+    dst.vect_s16[2] = vld1q_s16(tmp_dst+16);
+    dst.vect_s16[3] = vld1q_s16(tmp_dst+24);
     return dst;
 }
