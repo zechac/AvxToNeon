@@ -1419,31 +1419,31 @@ const char *RunTest(InstructionTest test, int *flag)
             break;
         case UT_MM512_MASK_SWIZZLE_EPI32_CDAB:
             ret = "MM512_MASK_SWIZZLE_EPI32_CDAB";
-            *flag = test_mm512_mask_swizzle_epi32_CDAB;
+            *flag = test_mm512_mask_swizzle_epi32_CDAB();
             break;
         case UT_MM512_MASK_SWIZZLE_EPI32_BADC:
             ret = "MM512_MASK_SWIZZLE_EPI32_BADC";
-            *flag = test_mm512_mask_swizzle_epi32_BADC;
+            *flag = test_mm512_mask_swizzle_epi32_BADC();
             break;
         case UT_MM512_MASK_SWIZZLE_EPI32_AAAA:
             ret = "MM512_MASK_SWIZZLE_EPI32_AAAA";
-            *flag = test_mm512_mask_swizzle_epi32_AAAA;
+            *flag = test_mm512_mask_swizzle_epi32_AAAA();
             break;
         case UT_MM512_MASK_SWIZZLE_EPI32_BBBB:
             ret = "MM512_MASK_SWIZZLE_EPI32_BBBB";
-            *flag = test_mm512_mask_swizzle_epi32_BBBB;
+            *flag = test_mm512_mask_swizzle_epi32_BBBB();
             break;
         case UT_MM512_MASK_SWIZZLE_EPI32_CCCC:
             ret = "MM512_MASK_SWIZZLE_EPI32_CCCC";
-            *flag = test_mm512_mask_swizzle_epi32_CCCC;
+            *flag = test_mm512_mask_swizzle_epi32_CCCC();
             break;
         case UT_MM512_MASK_SWIZZLE_EPI32_DDDD:
             ret = "MM512_MASK_SWIZZLE_EPI32_DDDD";
-            *flag = test_mm512_mask_swizzle_epi32_DDDD;
+            *flag = test_mm512_mask_swizzle_epi32_DDDD();
             break;
         case UT_MM512_MASK_SWIZZLE_EPI32_DACB:
             ret = "MM512_MASK_SWIZZLE_EPI32_DACB";
-            *flag = test_mm512_mask_swizzle_epi32_DACB;
+            *flag = test_mm512_mask_swizzle_epi32_DACB();
             break;
         case UT_MM512_MASK_SHUFFLELO_EPI16:
             ret = "MM512_MASK_SHUFFLELO_EPI16";
