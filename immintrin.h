@@ -124,7 +124,7 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
 {
     __m512i res;
     int32_t tmp_src[16],tmp_v[16],tmp_dst[16];
-    int i;
+    int i,j;
     if(s==_MM_SWIZ_REG_NONE||s==_MM_SWIZ_REG_DCBA){
         return v;
     }
@@ -141,7 +141,7 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
     switch (s)
     {
     case _MM_SWIZ_REG_CDAB:
-        for(int j=0;j<8;j++){
+        for(j=0;j<8;j++){
             i=j*2;//i := j*64
             if((k>>(j*2))&&0x0001){
                 tmp_dst[i] = tmp_v[i+1];//v[i+63:i+32]
@@ -156,7 +156,7 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
         }
         break;
     case _MM_SWIZ_REG_BADC:
-        for(int j=0;j<4;j++){
+        for(j=0;j<4;j++){
             i=j*4;//i :=j*128;
             if((k>>(j*4))&&0x0001){
                 tmp_dst[i]=tmp_v[i+2];
@@ -181,7 +181,7 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
         }
         break;
     case _MM_SWIZ_REG_AAAA:
-        for(int j=0;j<4;j++){
+        for(j=0;j<4;j++){
             i=j*4;
             if((k>>(j*4))&&0x0001){
                 tmp_dst[i] = tmp_v[i];
@@ -206,7 +206,7 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
         }
         break;
     case _MM_SWIZ_REG_BBBB:
-        for(int j=0;j<4;j++){
+        for(j=0;j<4;j++){
             i=j*4;
             if((k>>(j*4))&&0x0001){
                 tmp_dst[i] = tmp_v[i+1];
@@ -231,7 +231,7 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
         }
         break;
     case _MM_SWIZ_REG_CCCC:
-        for(int j=0;j<4;j++){
+        for(j=0;j<4;j++){
             i=j*4;
             if((k>>(j*4))&&0x0001){
                 tmp_dst[i] = tmp_v[i+2];
@@ -256,7 +256,7 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
         }
         break;
     case _MM_SWIZ_REG_DDDD:
-        for(int j=0;j<4;j++){
+        for(j=0;j<4;j++){
             i=j*4;
             if((k>>(j*4))&&0x0001){
                 tmp_dst[i] = tmp_v[i+3];
@@ -281,7 +281,7 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
         }
         break;
     case _MM_SWIZ_REG_DACB:
-        for(int j=0;j<4;j++){
+        for(j=0;j<4;j++){
             i=j*4;
             if((k>>(j*4))&&0x0001){
                 tmp_dst[i] = tmp_v[i+1];
@@ -308,6 +308,12 @@ FORCE_INLINE __m512i _mm512_mask_swizzle_epi32 (__m512i src, __mmask16 k, __m512
     default:
         break;
     }
+
+    printf("_mm512_mask_swizzle_epi32: \n");
+    for(j=0;j<16;j++){
+        printf("%d,",tmp_dst[j]);
+    }
+
     res.vect_s32[0] = vld1q_s32(tmp_dst);
     res.vect_s32[1] = vld1q_s32(tmp_dst+4);
     res.vect_s32[2] = vld1q_s32(tmp_dst+8);
@@ -363,9 +369,9 @@ FORCE_INLINE __m512i _mm512_mask_shufflelo_epi16 (__m512i src,__mmask32 k,__m512
         }
     }
 
-    printf("tmp_dst: \n");
+    printf("_mm512_mask_shufflelo_epi16: \n");
     for(j=0;j<32;j++){
-        printf("%hd",tmp_dst[j]);
+        printf("%hd,",tmp_dst[j]);
     }
 
     dst.vect_s16[0] = vld1q_s16(tmp_dst);
