@@ -354,7 +354,7 @@ FORCE_INLINE __m512i _mm512_mask_shufflelo_epi16 (__m512i src,__mmask32 k,__m512
     tmp_dst[26] = tmp_a[(imm8>>4)&0x00000003+24];
     tmp_dst[27] = tmp_a[(imm8>>6)&0x00000003+24];
 
-    for(int j=0;j<32;j++){
+    for(j=0;j<32;j++){
         i=j;
         if((k>>j)&0x00000001){
             //dst[i] = tmp_dst[i];
@@ -362,6 +362,12 @@ FORCE_INLINE __m512i _mm512_mask_shufflelo_epi16 (__m512i src,__mmask32 k,__m512
             tmp_dst[i] = tmp_src[i];
         }
     }
+
+    println("tmp_dst: ");
+    for(j=0;j<32;j++){
+        printf("%hd",tmp_dst[j]);
+    }
+
     dst.vect_s16[0] = vld1q_s16(tmp_dst);
     dst.vect_s16[1] = vld1q_s16(tmp_dst+8);
     dst.vect_s16[2] = vld1q_s16(tmp_dst+16);
