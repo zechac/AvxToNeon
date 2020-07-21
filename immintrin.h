@@ -362,7 +362,7 @@ FORCE_INLINE __m512i _mm512_mask_shufflelo_epi16 (__m512i src,__mmask32 k,__m512
 
     for(j=0;j<32;j++){
         i=j;
-        if((k>>j)&0x00000001){
+        if((k>>j)&0x01){
             //dst[i] = tmp_dst[i];
         }else{
             tmp_dst[i] = tmp_src[i];
