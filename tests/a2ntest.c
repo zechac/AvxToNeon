@@ -6090,16 +6090,16 @@ int test_mm512_mask_swizzle_epi32_DACB(){
 }
 
 int test_mm512_mask_shufflelo_epi16(){
-    int32_t *a = g_test_mm512_mask_shufflelo_epi16_data_model.a;
-    int32_t *b = g_test_mm512_mask_shufflelo_epi16_data_model.b;
-    int32_t *expect = g_test_mm512_mask_shufflelo_epi16_data_model.expect;
+    int16_t *a = g_test_mm512_mask_shufflelo_epi16_data_model.a;
+    int16_t *b = g_test_mm512_mask_shufflelo_epi16_data_model.b;
+    int16_t *expect = g_test_mm512_mask_shufflelo_epi16_data_model.expect;
     int iCount;
     __m512i src, v;
     __mmask32 mask = 0xAABBCCDD;
     int imm8= 0xDDCCBBAA;
     for (iCount = 0; iCount < g_512bit_divto_128bit; iCount++) {
-        src.vect_s32[iCount] = vld1q_s32(a + iCount * 4);
-        v.vect_s32[iCount] = vld1q_s32(b + iCount * 4);
+        src.vect_s16[iCount] = vld1q_s16(a + iCount * 8);
+        v.vect_s16[iCount] = vld1q_s16(b + iCount * 8);
     }
     __m512i res = _mm512_mask_shufflelo_epi16(src,mask, v,imm8);
     return comp_return(expect, &res, sizeof(__m512i));
