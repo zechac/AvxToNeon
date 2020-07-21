@@ -363,7 +363,7 @@ FORCE_INLINE __m512i _mm512_mask_shufflelo_epi16 (__m512i src,__mmask32 k,__m512
         }
     }
 
-    println("tmp_dst: ");
+    printf("tmp_dst: \n");
     for(j=0;j<32;j++){
         printf("%hd",tmp_dst[j]);
     }
